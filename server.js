@@ -57,6 +57,7 @@ app.route(prefix + '/assignments')
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
+console.log("Ok ça fonctionne");
 
 module.exports = app;
 
