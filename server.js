@@ -2,8 +2,10 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
-
 let mongoose = require('mongoose');
+
+let UserModel = require('./user-model');
+const bcrypt = require('bcrypt'); // encrypter les mots de passe
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
 
@@ -58,6 +60,31 @@ app.route(prefix + '/assignments')
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
 console.log("Ok ça fonctionne");
+
+// Inscription et hachage mot de passe
+app.post('/sign-up', (req, res) => {
+
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      const userModel = new UserModel({
+        username: req.body.username,
+        password: hash
+      })
+
+      userModel.save()
+        .then(result => {
+          res.status(201).json({
+            message: 'User created',
+            result: result
+          })
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: err
+          })
+        })
+    })
+  })
 
 module.exports = app;
 
