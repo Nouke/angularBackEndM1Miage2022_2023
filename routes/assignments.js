@@ -1,4 +1,5 @@
 let Assignment = require('../model/assignment');
+const assignment = require('../model/assignment');
 
 // Récupérer tous les assignments (GET)
 /*function getAssignments(req, res){
@@ -14,7 +15,7 @@ let Assignment = require('../model/assignment');
 
 // Récupérer tous les assignments (GET) avec Pagination
 function getAssignments(req, res) {
-    var aggregateQuery = Assignment.aggregate();
+    var aggregateQuery = assignment.aggregate();
     Assignment.aggregatePaginate(aggregateQuery,
         {
             page: parseInt(req.query.page) || 1,
@@ -46,13 +47,19 @@ function postAssignment(req, res){
     assignment.nom = req.body.nom;
     assignment.dateDeRendu = req.body.dateDeRendu;
     assignment.rendu = req.body.rendu;
+    assignment.auteur = req.body.auteur;
+    assignment.note = req.body.note;
+    assignment.remarque = req.body.remarque;
+    assignment.matiere = req.body.matiere;
+    assignment.urlSubjectImage = req.body.urlSubjectImage;
+    assignment.urlTeacherImage = req.body.urlTeacherImage;
 
     console.log("POST assignment reçu :");
     console.log(assignment)
 
     assignment.save( (err) => {
         if(err){
-            res.send('cant post assignment ', err);
+            console.log('cant post assignment ', err);
         }
         res.json({ message: `${assignment.nom} saved!`})
     })

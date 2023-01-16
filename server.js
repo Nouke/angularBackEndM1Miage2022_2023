@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
+let user = require("./routes/users");
 let mongoose = require('mongoose');
 
 let UserModel = require('./user-model');
@@ -56,13 +57,20 @@ app.route(prefix + '/assignments')
   .post(assignment.postAssignment)
   .put(assignment.updateAssignment);
 
+app.route(prefix + '/user')
+  .post(user.getUser);
+
+app.route(prefix + '/users')
+  .get(user.getUsers);
+
+
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
 console.log("Ok ça fonctionne");
 
 // Inscription et hachage mot de passe
-app.post('/sign-up', (req, res) => {
+/*app.post('/sign-up', (req, res) => {
 
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -84,7 +92,7 @@ app.post('/sign-up', (req, res) => {
           })
         })
     })
-  })
+  })*/
 
 module.exports = app;
 

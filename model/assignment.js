@@ -6,12 +6,19 @@ let AssignmentSchema = Schema({
     id: Number,
     dateDeRendu: Date,
     nom: String,
-    rendu: Boolean
+    rendu: Boolean,
+    auteur: String,
+    note: Number,
+    remarque: String,
+    matiere: {
+        type: String,
+        enum: ['Base de données', 'Maths pour Big data', 'Developpement web', 'Programmation java', 'planification de projet'],
+        default: 'pending'
+    },
+    urlSubjectImage: String,
+    urlTeacherImage: String
 });
 
 AssignmentSchema.plugin(aggregatePaginate);
-
-
-
 // C'est à travers ce modèle Mongoose qu'on pourra faire le CRUD
 module.exports = mongoose.model('Assignment', AssignmentSchema);
