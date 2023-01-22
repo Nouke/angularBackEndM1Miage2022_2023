@@ -30,6 +30,17 @@ function getAssignments(req, res) {
     );
 }
 
+function getAllAssignments(req, res) {
+    Assignment.find(
+        (err, assignments) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(assignments);
+        }
+    );
+}
+
 // Récupérer un assignment par son id (GET)
 function getAssignment(req, res){
     let assignmentId = req.params.id;
@@ -95,4 +106,4 @@ function deleteAssignment(req, res) {
 
 
 
-module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = { getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment, getAllAssignments };
